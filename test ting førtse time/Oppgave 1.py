@@ -1,0 +1,1 @@
+a=input("Hva er navnet ditt?:"); b=2023-(int(input("Når ble du født?:"))); print("Hei, ",a,"! Du er ",b," år gammel.")

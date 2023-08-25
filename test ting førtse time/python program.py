@@ -1,0 +1,50 @@
+print("Velkommen til adjektiv historie land\nVennligst skriv inn en 39 adjektiv her:")
+a1=input("Adjektiv:\t")
+a2=input("Adjektiv:\t")
+a3=input("Adjektiv:\t")
+a4=input("Adjektiv:\t")
+a5=input("Adjektiv:\t")
+a6=input("Adjektiv:\t")
+a7=input("Adjektiv:\t")
+a8=input("Adjektiv:\t")
+a9=input("Adjektiv:\t")
+a10=input("Adjektiv:\t")
+a11=input("Adjektiv:\t")
+a12=input("Adjektiv:\t")
+a13=input("Adjektiv:\t")
+a14=input("Adjektiv:\t")
+a15=input("Adjektiv:\t")
+a16=input("Adjektiv:\t")
+a17=input("Adjektiv:\t")
+a18=input("Adjektiv:\t")
+a19=input("Adjektiv:\t")
+a20=input("Adjektiv:\t")
+a21=input("Adjektiv:\t")
+a22=input("Adjektiv:\t")
+a23=input("Adjektiv:\t")
+a24=input("Adjektiv:\t")
+a25=input("Adjektiv:\t")
+a26=input("Adjektiv:\t")
+a27=input("Adjektiv:\t")
+a28=input("Adjektiv:\t")
+a29=input("Adjektiv:\t")
+a30=input("Adjektiv:\t")
+a31=input("Adjektiv:\t")
+a32=input("Adjektiv:\t")
+a33=input("Adjektiv:\t")
+a34=input("Adjektiv:\t")
+a35=input("Adjektiv:\t")
+a36=input("Adjektiv:\t")
+a37=input("Adjektiv:\t")
+a38=input("Adjektiv:\t")
+a39=input("Adjektiv:\t")
+print("Her er din adjektivhistorie:\nKjære alle dere",a1,"menneskene i vår",a2,"familie,\nMin kjære",a3,"kone og jeg, den",a4,"mannen hennes, ønsker dere velkommen til denne",a5,"festen.\nVi har lenge gledet oss til å se dere alle",a6,"slektningene våre her i vårt",a7,"hjem.\nSpesielt er vi glade for at den",a8,"Mormora  vår ville komme. At den",a9,"farmora også kom, er ekstra bra.\nOg at du",a10,"onkel Per og du",a11,"tante Berit kom fra den",a12,"byen deres, ja, det roper vi  et",a13,"Hurra for.\nDen",a14,"bestefar er jo alltid like",a15,"For ikke å nevne den",a16,"farfar som alltid er så",a17,"\nHar dere sett hvordan den",a18,"tante Randi ser ut i den",a19,"kjolen sin?",a20,"",a21,"",a22,"",a23,"",a24,"",a25,"",a26,"",a27,"",a28,"",a29,"",a30,"",a31,"",a32,"",a33,"",a34,"",a35,"",a36,"",a37,"",a38,"",a39,"")
+
+  Spesielt er vi glade for at den…………………Mormora  vår ville komme. At den………………… farmora også kom, er ekstra bra.  Og at du …………………onkel Per og du…………………tante Berit kom fra den…………………byen deres, ja, det roper vi  et…………………Hurra for. 
+Den…………………bestefar er jo alltid like…………………For ikke å nevne den…………………farfar som alltid er så…………………
+Har dere sett hvordan den…………………tante Randi ser ut i den…………………kjolen sin? 
+Og den…………………tante Tonje er jo alltid like…………………Vi har jo også de…………………kusinene våre her. 
+Den…………………Aurora  og den…………………Julia er alltid like…………………, for ikke å glemme den…………………Emilie og den…………………broren hennes. 
+De har aldri vært så…………………som i dag. Vi håper dere…………………lektningene våre, vil like denne…………………sammenkomsten, og at dere like det…………………vi har å by på.  De …………………onklene,…………………Kristian og den …………………Andreas kommer sikkert til å fortelle noen av de…………………historiene sine.
+
+Vel, vi, altså min…………………kone og jeg, den…………………verten,  ønsker alle dere…………………venner en riktig…………………kveld!
