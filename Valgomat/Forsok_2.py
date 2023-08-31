@@ -18,13 +18,22 @@ antall_spm=len(spm_liste_H)+len(spm_liste_V)
 
 n=0
 spmn=0
+svart=[]
 
 while n<=antall_spm:
     HorV=r.randint(1,2)
+    print(HorV)
     spmn=r.randint(0,3)
+    print(spmn)
     #print(HorV,"\t",spmn)
-    
-    if HorV==1:
+    svartn=()
+    print(svart)
+    svartn=str(HorV)+str(spmn)
+    print(svartn)    
+
+    if svartn in svart:
+        n=n-1    
+    elif HorV==1:
         svar=str.lower(input(f"Spørsmål:\n\t\t{spm_liste_H[spmn]}\n\t\tEr du\n\t\thelt enig\tenig\tuenig\thelt uenig?\n\t\t"))
         if svar=="helt enig":
             poengsum+=2
@@ -36,7 +45,7 @@ while n<=antall_spm:
             poengsum=poengsum-2
         else:
             svar=str.lower(input("Du skrev feil, prøv på nytt\n\t\t"))
-    if HorV==2:
+    elif HorV==2:
         svar=str.lower(input(f"Spørsmål:\n\t\t{spm_liste_V[spmn]}\n\t\tEr du\n\t\thelt enig\tenig\tuenig\thelt uenig?\n\t\t"))
         if svar=="helt enig":
             poengsum=poengsum-2
@@ -48,9 +57,38 @@ while n<=antall_spm:
             poengsum+=2
         else:
             svar=str.lower(input("Du skrev feil, prøv på nytt\n\t\t"))
+    svart.append(svartn)
     print(poengsum)
     n+=1
 '''
+partier=["Rødt","SV","Arbeiderpartiet","Høyre","FRP"]
+
+
+if poengsum < 20-((40/(len(partier)))*(len(partier)-1)):
+    print(poengsum)
+    print(f"Du fikk:\t{partier[len(partier)-1]}")
+    print(f"\n\t\t\t{20-((40/(len(partier)))*(len(partier)-1))}\n")
+elif poengsum < 20-((40/(len(partier)))*(len(partier)-2)):
+    print(poengsum)
+    print(f"Du fikk:\t{partier[len(partier)-2]}")
+    print(f"\n\t\t\t{20-((40/(len(partier)))*(len(partier)-2))}\n")
+elif poengsum < 20-((40/(len(partier)))*(len(partier)-3)):
+    print(poengsum)
+    print(f"Du fikk:\t{partier[len(partier)-3]}")
+    print(f"\n\t\t\t{20-((40/(len(partier)))*(len(partier)-3))}\n")
+elif poengsum < 20-((40/(len(partier)))*(len(partier)-4)):
+    print(poengsum)
+    print(f"Du fikk:\t{partier[len(partier)-4]}")
+    print(f"\n\t\t\t{20-((40/(len(partier)))*(len(partier)-4))}\n")
+elif poengsum <= 20-((40/(len(partier)))*(len(partier)-5)):
+    print(poengsum)
+    print(f"Du fikk:\t{partier[len(partier)-5]}")
+    print(f"\n\t\t\t{20-((40/(len(partier)))*(len(partier)-5))}\n")
+else:
+    print("eirik har gjort noe feil")
+    print(f"\n\t\t\t{poengsum}\n")
+
+
 partier=["Rødt","SV","Arbeiderpartiet","Høyre","FRP"]
 
 
@@ -66,8 +104,8 @@ elif poengsum > -20+40/len(partier)*(len(partier)-2):
     print(f"Du fikk:\t{partier[len(partier)-1]}")
 else:
     print("eirik har gjort noe feil")
-'''
 
+'''
 if poengsum > 10:
     print("Du fikk:\tFRP")
 elif poengsum > 2:
