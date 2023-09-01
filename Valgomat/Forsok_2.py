@@ -32,7 +32,7 @@ while n<=antall_spm:
     print(svartn)    
 
     if svartn in svart:
-        n=n-1    
+        n=n-1
     elif HorV==1:
         svar=str.lower(input(f"Spørsmål:\n\t\t{spm_liste_H[spmn]}\n\t\tEr du\n\t\thelt enig\tenig\tuenig\thelt uenig?\n\t\t"))
         if svar=="helt enig":
