@@ -22,14 +22,14 @@ svart=[]
 
 while n<=antall_spm:
     HorV=r.randint(1,2)
-    print(HorV)
+    #print(HorV)
     spmn=r.randint(0,3)
-    print(spmn)
+    #print(spmn)
     #print(HorV,"\t",spmn)
     svartn=()
-    print(svart)
+    #print(svart)
     svartn=str(HorV)+str(spmn)
-    print(svartn)    
+    #print(svartn)    
 
     if svartn in svart:
         n=n-1
@@ -58,7 +58,7 @@ while n<=antall_spm:
         else:
             svar=str.lower(input("Du skrev feil, prøv på nytt\n\t\t"))
     svart.append(svartn)
-    print(poengsum)
+    #print(poengsum)
     n+=1
 '''
 partier=["Rødt","SV","Arbeiderpartiet","Høyre","FRP"]

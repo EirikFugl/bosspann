@@ -7,7 +7,7 @@ liste_regn=[]
 liste_temp=[]
 liste_trykk=[]
 liste_dager=["Mandag","Tirsdag","Onsdag","Torsdag","Fredag","Lørdag","Søndag"]
-liste_data=["temperatur","nedbørsmengde","vindstyrke","trykk"]
+#liste_data=["temperatur","nedbørsmengde","vindstyrke","trykk"]
 
 for i in range(0,len(liste_dager)):
     print(f"Tast inn data for {liste_dager[i]}")
