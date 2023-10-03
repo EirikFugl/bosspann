@@ -1,12 +1,11 @@
 # Hangman
 import os
 import time
-from random_word import RandomWords         #importerer moduler jeg trenger
+from random_word import RandomWords         #importerer moduler jeg trenger NB PIP MODUL INSTALER!!!!
 import sys
 
 r=RandomWords()
 os.system("cls")                            #tømmer terminalen
-#gjettetOrd="zxzxzxxxzxz"                    #setter gjettetOrd til noe som ikke er i databasen til get_random_word() (hint: linje 20)
 strin=0
 gjettet=0
 hemList=[]
@@ -118,7 +117,7 @@ while gjettet==0:
 tidSlutt = time.time_ns()
 # # # # # # # # # S L U T T # # # # # # # # # 
 
-totTid = round(((tidSlutt-tidStart)/1000000000),4)
+totTid = round(((tidSlutt-tidStart)/1000000000),1)
 
 #print (tidSlutt, tidStart)
 print("\n\nDet tok cirka",totTid,"sekunder å gjette ordet!")
