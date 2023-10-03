@@ -32,13 +32,27 @@ print("#\t#########\t#\n#######  HANGMAN  #######\n#\t#########\t#")
 # denne while løkken gir oss et hemmelig ord enten bestemt av brukeren eller tilfeldig
 
 while strin==0:
-    hemmeligOrd = str.lower(input("\n\nSkriv inn det hemmelige ordet, eller trykk [ENTER] for tilfeldig:\t"))
+    hemmeligOrd =input("\n\nSkriv inn det hemmelige ordet, eller trykk [ENTER] for tilfeldig:\t")
+    try:
+        hemmeligOrd=int(hemmeligOrd)
+        print("\nDETTE ER IKKE ET ORD ER DET??")
+    except ValueError:
+        hemmeligOrd = str.lower(hemmeligOrd)
+    
 
     while hemmeligOrd == "":             
         lengde = input("\n\nSkriv inn lengde på ordet, [ENTER] for ingen begrensning: \t")
         
         try:                            # tester om brukeren skrev inn et tall
             lengde = int(lengde)
+
+            if lengde<3 or lengde>16:   # informerer om lang lastetid
+                print("For lang lastetid, avbryter")
+                time.sleep(1)
+                continue
+            elif lengde<4 or lengde>15:
+                print("\n ADVARSEL: Sykt lang lastetid!\n")
+        
         except ValueError:              # hvis ikke, er det kanskje [ENTER] som er tastet og da må vi lage et tilfeldig tall
             if lengde=="":
                 hemmeligOrd=r.get_random_word()
@@ -59,9 +73,11 @@ while strin==0:
     strin+=1
 
 
-
-for i in range (len(hemmeligOrd)):              # lager hemmelig ord liste og setter den til kun -
-    hemList.append("-")
+for bokstav in hemmeligOrd:              # lager hemmelig ord liste og setter den til kun -
+    if bokstav==" ":
+        hemList.append("-")
+    else:
+        hemList.append("__")
 
 # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # S T A R T # # # # # # # # #   # selve spillet starter
@@ -151,12 +167,17 @@ while gjettet==0:
             antFeil+=1
 
 
-    if "-" not in hemList:                      # hvis ikke flere ugjettede bokstaver, ordet er gjettet riktig og du vant
+    if "__" not in hemList:                      # hvis ikke flere ugjettede bokstaver, ordet er gjettet riktig og du vant
         gjettet=1
+        telle=0
+        for bokstav in hemList:
+            if bokstav=="-":
+                hemList[telle]=bokstav
+            telle+=1
         os.system("cls")
         print("#\t#########\t#\n#######  HANGMAN  #######\t\n#\t#########\t#")
         print("\n\n"+" ".join(hemList))
-        print("\n\nRIKTIG!!!!")        
+        print(f"\n\nRIKTIG!!!!\nAntall feil:{antFeil}")        
 
             
 tidSlutt = time.time_ns()                       # vi stopper tidtakningen
@@ -166,4 +187,4 @@ tidSlutt = time.time_ns()                       # vi stopper tidtakningen
 totTid = round(((tidSlutt-tidStart)/1000000000),1)
 # regner det om til sekunder (time.time_ns() tar unix tid i nanosekunder så det er ganske nøyaktig)
 
-print(f"\n\nDet tok cirka {totTid } sekunder å gjette ordet {hemmeligOrd}!")
+print(f'\n\nDet tok cirka {totTid } sekunder å gjette ordet "{hemmeligOrd}"!')
