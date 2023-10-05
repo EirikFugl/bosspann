@@ -16,11 +16,12 @@
 import os                                   # trengs for os.system("cls") som clearer terminalen
 import time                                 # trengs for å ta tiden
 from random_word import RandomWords         # fikser tilfeldig ord
+ossystem='cls' # 'clear'                    # SKIFT HER OM DU BRUKER MAC
 
 
 # setter opp litt forskjellig
 r = RandomWords()
-os.system("cls")                        
+os.system(ossystem)                        
 strin=0                     # trengs for å kjøre while løkken som finner hemmeligOrd helt til man har fått et fungerende ord (str)
 gjettet=0                   # hvis ordet er gjettet, gjetter = 1, ellers, gjettet = 0. Er for å kjøre spille-loopen til riktig ord er funnet
 hemList=[]                  # listifiserer det hemmelige ordet
@@ -57,7 +58,7 @@ print("#\t#########\t#\n#######  HANGMAN  #######\n#\t#########\t#")
 # denne while løkken gir oss et hemmelig ord enten bestemt av brukeren eller tilfeldig
 
 while strin==0:
-    hemmeligOrd =input("\n\nSkriv inn det hemmelige ordet, eller trykk [ENTER] for tilfeldig:\t")
+    hemmeligOrd =input("\n\nSkriv inn det hemmelige ordet, eller trykk [ENTER] for tilfeldig (potensielt snålt engelsk ord):\t")
     try:
         hemmeligOrd=int(hemmeligOrd)
         print("\nDETTE ER IKKE ET ORD ER DET??")
@@ -110,7 +111,7 @@ tidStart = time.time_ns()                       # tiden tas
 
 
 while gjettet==0:
-    os.system("cls")
+    os.system(ossystem)
     print("#\t#########\t#\n#######  HANGMAN  #######\t\n#\t#########\t#")
     telle=0
     riktig=0
@@ -127,7 +128,7 @@ while gjettet==0:
     if antFeil>0:                                       # tegner riktig tegning til terminalen
         print(tegn[antFeil-1])                  
         if antFeil>=(len(tegn)):                        # hvis du har tapt, avslutt spillet
-             os.system("cls")
+             os.system(ossystem)
              print("#\t#########\t#\n#######  HANGMAN  #######\t\n#\t#########\t#")
              print("\n\n\n\n"+tegn[antFeil-1])
              print("\nDU TAPTE !\n\nFyren døde :(\n\nOrdet var "+hemmeligOrd+"!")
@@ -230,7 +231,7 @@ while gjettet==0:
             if bokstav=="-":
                 hemList[telle]=bokstav
             telle+=1
-        os.system("cls")
+        os.system(ossystem)
         print("#\t#########\t#\n#######  HANGMAN  #######\t\n#\t#########\t#")
         print("\n\n"+" ".join(hemList))
         print(f"\n\nRIKTIG!!!!\nAntall feil:{antFeil}")        
