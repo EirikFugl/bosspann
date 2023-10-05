@@ -24,10 +24,10 @@ strin=0                     # trengs for å kjøre while løkken som finner hemm
 gjettet=0                   # hvis ordet er gjettet, gjetter = 1, ellers, gjettet = 0. Er for å kjøre spille-loopen til riktig ord er funnet
 hemList=[]                  # listifiserer det hemmelige ordet
 feiList=[]                  # liste over feile bokstaver
-antFeil=0
-tapt=0
+antFeil=0                   # antall feil
+tapt=0                      # har du tapt, ja eller nei (1 eller 2)
 
-tegn=[                      # Liste med tegninger
+tegn=[                      # Liste med tegninger (skal IKKE tukles med, sensitivt)
 
     "\n\n\n\n\n\n\n\n\n\n\n   ----------",
     "\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n   ----------",
@@ -84,7 +84,7 @@ while strin==0:
             print("Loading...")
             while len(hemmeligOrd)!=lengde:     # denne løkken kjører til vi får ord med riktig lengde
                 hemmeligOrd=r.get_random_word()
-                #print(hemmeligOrd)                 # gjør denne synlig hvis du kjeder deg under loading
+                print(hemmeligOrd)                 # gjør denne synlig hvis du kjeder deg under loading
 
     if not isinstance(hemmeligOrd,str):         # hvis brukeren ikke skrev et ord eller trykket [ENTER] så får de kjeft og løkken kjøres på nytt
         print("\n Skjerpings du, skriv et ord!")
@@ -123,7 +123,7 @@ while gjettet==0:
              os.system("cls")
              print("#\t#########\t#\n#######  HANGMAN  #######\t\n#\t#########\t#")
              print("\n\n"+tegn[len(antFeil)-1])
-             print("DU TAPTE !\n\nOrdet var "+hemmeligOrd+"!")
+             print("DU TAPTE !\n\nFyren døde :(\n\nOrdet var "+hemmeligOrd+"!")
              tapt=1
              
 
