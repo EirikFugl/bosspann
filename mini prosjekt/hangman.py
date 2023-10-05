@@ -12,6 +12,7 @@ hemList=[]
 feiList=[]
 tegning=0
 tegn=["    ----------",
+      "\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n   ----------",
       "\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n   ----------"
       ]
 

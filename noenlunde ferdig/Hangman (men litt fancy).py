@@ -25,6 +25,25 @@ gjettet=0                   # hvis ordet er gjettet, gjetter = 1, ellers, gjette
 hemList=[]                  # listifiserer det hemmelige ordet
 feiList=[]                  # liste over feile bokstaver
 antFeil=0
+tapt=0
+
+tegn=[                      # Liste med tegninger
+
+    "\n\n\n\n\n\n\n\n\n\n\n   ----------",
+    "\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n   ----------",
+    "\t|----------------\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n   ----------",
+    "\t|----------------\n\t|  /\n\t| /\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n   ----------",
+    "\t|----------------\n\t|  /            |\n\t| /\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n\t|\n   ----------",
+    "\t|----------------\n\t|  /            |\n\t| /            ---\n\t|             /   \ \n\t|	      (   )\n\t|	       ---\n\t|\n\t|\n\t|\n\t|\n\t|\n   ----------",
+    "\t|----------------\n\t|  /            |\n\t| /            ---\n\t|             /   \ \n\t|	      (   )\n\t|	       ---\n\t|               |\n\t|               |\n\t|               |\n\t|\n\t|\n   ----------",
+    "\t|----------------\n\t|  /            |\n\t| /            ---\n\t|             /   \ \n\t|	      (   )\n\t|	       ---\n\t|               |\n\t|            ---|\n\t|               |\n\t|\n\t|\n   ----------",
+    "\t|----------------\n\t|  /            |\n\t| /            ---\n\t|             /   \ \n\t|	      (   )\n\t|	       ---\n\t|               |\n\t|            ---|---\n\t|               |\n\t|\n\t|\n   ----------",
+    "\t|----------------\n\t|  /            |\n\t| /            ---\n\t|             /   \ \n\t|	      (   )\n\t|	       ---\n\t|               |\n\t|            ---|---\n\t|               |\n\t|              /\n\t|             /\n   ----------",
+    "\t|----------------\n\t|  /            |\n\t| /            ---\n\t|             /   \ \n\t|	      (   )\n\t|	       ---\n\t|               |\n\t|            ---|---\n\t|               |\n\t|              / \ \n\t|             /   \ \n   ----------",
+    "\t|----------------\n\t|  /            |\n\t| /            ---\n\t|             /x x\ \n\t|	      (   )\n\t|	       ---\n\t|               |\n\t|            ---|---\n\t|               |\n\t|              / \ \n\t|             /   \ \n   ----------",
+    "\t|----------------\n\t|  /            |\n\t| /            ---\n\t|             /x x\ \n\t|	      ( O )\n\t|	       ---\n\t|               |\n\t|            ---|---\n\t|               |\n\t|              / \ \n\t|             /   \ \n   ----------",
+    
+    ]
 
 print("#\t#########\t#\n#######  HANGMAN  #######\n#\t#########\t#")
 
@@ -90,11 +109,24 @@ while gjettet==0:
     telle=0
     riktig=0
     repetert=0
-
-
+    if tapt==1:
+        break
+    
     print("\n\nOrd:\t\t"+" ".join(hemList))             # printer listene hemmelig liste og feil liste
     print("\nFeil bokstaver:\t"+" | ".join(feiList))
-    print(f"\nAntall feil: {antFeil}")
+    print(f"\nAntall feil: {antFeil}\n\n")
+    
+    
+    if antFeil>0:
+        print(tegn[antFeil-1])
+        if antFeil>=(len(tegn)):
+             os.system("cls")
+             print("#\t#########\t#\n#######  HANGMAN  #######\t\n#\t#########\t#")
+             print("\n\n"+tegn[len(antFeil)-1])
+             print("DU TAPTE !\n\nOrdet var "+hemmeligOrd+"!")
+             tapt=1
+             
+
     guess=input("\n\nGjett en bokstav eller et ord:\t")
         
     if guess=="ex1t":                                               # hvis du ikke finner ut av det og vil avslutte
@@ -134,6 +166,11 @@ while gjettet==0:
             feiList.append(guess)
         antFeil+=1
         time.sleep(3)
+        continue
+
+    elif guess==" ":                            
+        print("\nHelst noe mer enn bare mellomrom")
+        time.sleep(2)
         continue
 
     for bokstav in feiList:          # sjekker om bokstaven allerede er skrevet
@@ -183,6 +220,8 @@ while gjettet==0:
 tidSlutt = time.time_ns()                       # vi stopper tidtakningen
 # # # # # # # # # S L U T T # # # # # # # # # 
 # # # # # # # # # # # # # # # # # # # # # # #
+
+
 
 totTid = round(((tidSlutt-tidStart)/1000000000),1)
 # regner det om til sekunder (time.time_ns() tar unix tid i nanosekunder så det er ganske nøyaktig)
