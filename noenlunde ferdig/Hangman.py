@@ -1,14 +1,15 @@
-# Hangman
+# Hangman -- Laget av Eirik
 
 # TIL INFO
-# 1. Min hangman kommer UTEN tegninger fordi det er stress å lage, gjør det selv
-# 2. Av en eller annen grunn må du cleare terminalen manuelt før du kjører
+# 1. Av en eller annen grunn må du cleare terminalen manuelt før du kjører
 # programmet ellers så oppfører det seg ikke
-# 3. Hvis du har Mac så må du (kanskje) bytte ut "cls" i os.system("cls") med "clear"
+# 2. Hvis du har Mac så må du (kanskje) bytte ut "cls" i os.system("cls") med "clear"
 # Eventuelt kjør spørsmål på det og smell inn en variabel men det får du gjøre selv
-# 4. IKKE VELG ORD LENGDER LENGRE ENN 15-16 BOKSTAVER ELLER UNDER 3
+# 3. IKKE VELG ORD LENGDER LENGRE ENN 15-16 BOKSTAVER ELLER UNDER 3 (hvis de skal være tilfeldige)
 # Det tar DRITLANG tid for get_random_word() å finne ordene så plis ikke
-
+# 4. I TEORIEN skal man kunne skrive inn det man vil som hemmelig ord, og gjette hva man vil
+# Jeg har prøvd å få til sånn at uansett hva man skriver så skal ikke koden krasje
+# Men det går sikkert an så gjerne finn ut av og fiks og oppdater meg
 
 # import - Importerer moduler jeg trenger (random_word må installeres fra pip)
 
@@ -26,6 +27,11 @@ hemList=[]                  # listifiserer det hemmelige ordet
 feiList=[]                  # liste over feile bokstaver
 antFeil=0                   # antall feil
 tapt=0                      # har du tapt, ja eller nei (1 eller 2)
+
+alfabet=[]                  # lager et alfabet uten at jeg trenger å skrive inn "a","b"...
+for bokstav in "abcdefghijklmnopqrstuvwxyzæøå":
+    alfabet.append(bokstav)
+
 
 tegn=[                      # Liste med tegninger (skal IKKE tukles med, sensitivt)
 
@@ -114,18 +120,19 @@ while gjettet==0:
     
     print("\n\nOrd:\t\t"+" ".join(hemList))             # printer listene hemmelig liste og feil liste
     print("\nFeil bokstaver:\t"+" | ".join(feiList))
+    print("\nBokstaver igjen i alfabetet:\t"+" | ".join(alfabet))
     print(f"\nAntall feil: {antFeil}\n\n")
     
     
-    if antFeil>0:
-        print(tegn[antFeil-1])
-        if antFeil>=(len(tegn)):
+    if antFeil>0:                                       # tegner riktig tegning til terminalen
+        print(tegn[antFeil-1])                  
+        if antFeil>=(len(tegn)):                        # hvis du har tapt, avslutt spillet
              os.system("cls")
              print("#\t#########\t#\n#######  HANGMAN  #######\t\n#\t#########\t#")
-             print("\n\n"+tegn[len(antFeil)-1])
-             print("DU TAPTE !\n\nFyren døde :(\n\nOrdet var "+hemmeligOrd+"!")
+             print("\n\n\n\n"+tegn[antFeil-1])
+             print("\nDU TAPTE !\n\nFyren døde :(\n\nOrdet var "+hemmeligOrd+"!")
              tapt=1
-             
+             break
 
     guess=input("\n\nGjett en bokstav eller et ord:\t")
         
@@ -136,7 +143,7 @@ while gjettet==0:
     try:
         guess=int(guess)
         print("DET ER IKKE TALL I ORD ER DET??")# mer kjeft
-        time.sleep(3)
+        time.sleep(2)
         continue
     except ValueError:
         print("",end="")                        # må lage indented block her så maskinen  slutter å mase
@@ -165,18 +172,18 @@ while gjettet==0:
         if guess not in feiList:
             feiList.append(guess)
         antFeil+=1
-        time.sleep(3)
+        time.sleep(2)
         continue
 
-    elif guess==" ":                            
+    elif guess==" ":                            # gir kjeft om man skriver mellomrom
         print("\nHelst noe mer enn bare mellomrom")
         time.sleep(2)
         continue
 
     for bokstav in feiList:          # sjekker om bokstaven allerede er skrevet
-        if bokstav==guess:
+        if str.lower(bokstav)==guess:
             print("\nDu har allerede gjettet denne bokstaven")
-            time.sleep(2)
+            time.sleep(1.5)
             break
     
     for bokstav in hemList:                     # sjekker om du allerede har gjettet riktig
@@ -192,6 +199,12 @@ while gjettet==0:
             riktig=1                            # unngår å printe samme melding flere ganger om bokstaven finnes flere ganger i hemmeligOrd
             if repetert==0:
                 print("\nRiktig!")
+                
+                try:                            # sjekker om man kan fjerne guess fra alfabetliste
+                    alfabet.remove(guess)
+                except ValueError:
+                    print("",end="")
+                
                 time.sleep(1)
             hemList[telle]=bokstav
             repetert=1
@@ -199,8 +212,14 @@ while gjettet==0:
         telle+=1
     
     if riktig==0:                               # hvis ikke gjettet riktig og gjettet bokstav ikke i feil liste så legg til i feil liste
-        if guess not in feiList:
+        if  guess not in feiList:
             feiList.append(guess)
+            
+            try:                                # sjekker om man kan fjerne guess fra alfabetet
+                alfabet.remove(guess)
+            except ValueError:
+                print("",end="")
+            
             antFeil+=1
 
 
@@ -226,4 +245,6 @@ tidSlutt = time.time_ns()                       # vi stopper tidtakningen
 totTid = round(((tidSlutt-tidStart)/1000000000),1)
 # regner det om til sekunder (time.time_ns() tar unix tid i nanosekunder så det er ganske nøyaktig)
 
-print(f'\n\nDet tok cirka {totTid } sekunder å gjette ordet "{hemmeligOrd}"!')
+print(f'\n\nDet tok cirka {totTid } sekunder å gjette ordet "{hemmeligOrd}"!\n\n')
+
+time.sleep(30)                                  # i tilfelle man kjører programmet i terminalen

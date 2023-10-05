@@ -15,7 +15,7 @@ landdata = {"Land":["Norge", "Sverige", "USA", "Tyskland", "Kina"],
 
 spørsmål = [("Hvor mange innbyggere er det i ",{landdata["Land"](a)},"?"),
             ("Hva er hovedstaden i ",{landdata.keys(a)},"?"),
-            ("Hvilke land grenser ",{landdata.keys(a)} til,"?"),
+            ("Hvilke land grenser ",{landdata.keys(a)} ,"til?"),
             ("Hvilket land har flest innbyggere av ",{landdata.keys(a)}," og ",{landdata.keys(a2)},"?")]
 
 svar     = [("Det bor {landdata.values(2)[a]} innbyggere i {landdata.keys(a)}")]
