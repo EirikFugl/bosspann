@@ -16,7 +16,7 @@ landdata = {"Land":         ["Norge", "Sverige",   "USA",             "Tyskland"
 
 print(landdata["Grenser"][3])
 spørsmål = [("Hvor mange innbyggere er det i ",landdata["Land"](3),"?"),
-            f"Hva er hovedstaden i {landdata.keys(a)}?",
+            f"Hva er hovedstaden i landdata.keys(a)?",
             f"Hvilke land grenser {landdata.keys(a)} til?",
             f"Hvilket land har flest innbyggere av {landdata.keys(a)} og {landdata.keys(a2)}?"]
 

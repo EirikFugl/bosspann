@@ -1,8 +1,6 @@
 import random as r
 
 
-
-
 landdata = {
             "Land":         ["Norge", "Sverige",   "USA", "Tyskland", "Kina"],
             "Innbyggertall":[5504329,  10409248,    331449281,         83149300,   1443497378],
@@ -18,8 +16,9 @@ tilfeldig_indeks = r.randint(0, len(landdata["Land"]) - 1)
 tilfeldig_land = landdata["Land"][tilfeldig_indeks]
 innbyggertall = landdata["Innbyggertall"][tilfeldig_indeks]
 hovedstad = landdata["Hovedstad"][tilfeldig_indeks]
+grenser = landdata["Grenser"][tilfeldig_indeks]
 
-print(tilfeldig_indeks,tilfeldig_land, innbyggertall,hovedstad)
+print(tilfeldig_indeks,tilfeldig_land, innbyggertall,hovedstad,)
 
 # Du kan nå bruke 'tilfeldig_land', 'innbyggertall' og 'hovedstad' i spørsmålet ditt til brukeren.
 print(f"Hvor mange innbyggere bor i {tilfeldig_land}?")

@@ -21,3 +21,10 @@ print(arealRektangel(4,5))
 print(arealRektangel2(5,4))
 
 print(arealRektangel(50,3))
+
+
+import random as rd
+
+def terning(antallSider):
+  """Returnerer et tilfeldig heltall i intervallet [1, antallSider], med begge endepunktente inkludert."""
+  return rd.randint(1, antallSider)

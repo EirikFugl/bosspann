@@ -13,6 +13,8 @@ landdata = {"Land":["Norge", "Sverige", "USA", "Tyskland", "Kina"],
             ["Canada", "Mexico"],["Danmark","Polen","Tsjekkia","Østerrike","Sveits","Frankrike", "Luxembourg", "Belgia","Nederland"],
             ["Mongolia", "Russland", "Nord-Korea", "India", "Nepal", "Pakistan", "Afghanistan", "Tadsjikistan", "Kirgisistan", "Kasakhstan", "Bhutan", "Myanmar", "Laos", "Vietnam"]]}
 
+
+
 spørsmål = [("Hvor mange innbyggere er det i ",{landdata["Land"](a)},"?"),
             ("Hva er hovedstaden i ",{landdata.keys(a)},"?"),
             ("Hvilke land grenser ",{landdata.keys(a)} ,"til?"),
