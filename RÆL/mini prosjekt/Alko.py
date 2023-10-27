@@ -8,8 +8,10 @@ while True:
 
     alk=mengde*abv/100
     ppe=pris/(mengde*(abv/100))
+    totAlk=round(mengde*(abv/100),2)
 
     print(f"Denne alkohol tingen koster {round(ppe,2)} per cl ren alkohol")
     print(f"Det tilsvarer rundt {round(alk/2.35)} bokser øl\n\n\n")
+    print(f"Totalantall ren alkohol = {totAlk} cl")
     a=input("\n\npå nytt?:\t")
     os.system("cls")

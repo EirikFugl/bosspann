@@ -38,7 +38,12 @@ varer = {
 
 
 for nøkkel in varer.keys():
-    print(f"Vare-ID: {nøkkel}\nVarenavn: {varer[nøkkel]['varenavn']}\nPris: {varer[nøkkel]['pris']}\nVarer på lager: {varer[nøkkel]['varelager']}\nProduktinfo: {varer[nøkkel]['produktinfo']}\nTekniske egenskaper:")
+    print(f"Vare-ID: {nøkkel}\nVarenavn: {varer[nøkkel]['varenavn']}\nPris: {varer[nøkkel]['pris']}\nVarer på lager: {varer[nøkkel]['varelager']}\nProduktinfo: {varer[nøkkel]['produktinfo']}\nFarger:")
+
+    for farge in varer[nøkkel]['farger']:
+        print(f"\t{farge}")
+    
+    print("Tekniske egenskaper:")
     if 'prosessor' in varer[nøkkel]['tekniske egenskaper'].keys():
         print(f"\tProsessor: {varer[nøkkel]['tekniske egenskaper']['prosessor']}")
     if 'grafikkort' in varer[nøkkel]['tekniske egenskaper'].keys():
@@ -47,11 +52,19 @@ for nøkkel in varer.keys():
         print(f"\tBatterikapasitet: {varer[nøkkel]['tekniske egenskaper']['batterikapasitet']}")
     if 'vekt' in varer[nøkkel]['tekniske egenskaper'].keys():
         print(f"\tVekt: {varer[nøkkel]['tekniske egenskaper']['vekt']} kg")
+    else:
+        print("Ingen tekniske egenskaper tilgjengelig")
     print("\n\n")
 
 def søk(vareId):
     if vareId in varer.keys():
-        print(f"\nVare-ID: {vareId}\nVarenavn: {varer[vareId]['varenavn']}\nPris: {varer[vareId]['pris']}\nVarer på lager: {varer[vareId]['varelager']}\nProduktinfo: {varer[vareId]['produktinfo']}\nTekniske egenskaper:")
+        print("\n VARE FUNNET:\n\n")
+        print(f"Vare-ID: {nøkkel}\nVarenavn: {varer[nøkkel]['varenavn']}\nPris: {varer[nøkkel]['pris']}\nVarer på lager: {varer[nøkkel]['varelager']}\nProduktinfo: {varer[nøkkel]['produktinfo']}\nFarger:")
+
+        for farge in varer[nøkkel]['farger']:
+            print(f"\t{farge}")
+    
+        print("Tekniske egenskaper:")       
         if 'prosessor' in varer[vareId]['tekniske egenskaper'].keys():
             print(f"\tProsessor: {varer[vareId]['tekniske egenskaper']['prosessor']}")
         if 'grafikkort' in varer[vareId]['tekniske egenskaper'].keys():
@@ -60,6 +73,8 @@ def søk(vareId):
             print(f"\tBatterikapasitet: {varer[vareId]['tekniske egenskaper']['batterikapasitet']}")
         if 'vekt' in varer[vareId]['tekniske egenskaper'].keys():
             print(f"\tVekt: {varer[vareId]['tekniske egenskaper']['vekt']} kg")
+        else:
+            print("Ingen tekniske egenskaper tilgjengelig")
         print("\n\n")
     else:
         print("Varen finnes ikke, eller Vare-IDen er feil")
@@ -72,3 +87,4 @@ def oppdaterPris(vareId,nyPris):
     print(f"Ny pris er:\t {varer[vareId]['pris']}")
 
 oppdaterPris(input("Skriv inn Vare-ID på vare som skal endres pris på_\t"),input("\nSkriv inn ny pris:\t"))
+
