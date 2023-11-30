@@ -1,5 +1,12 @@
-høgd = int(input("Skriv inn høyde:\t"))
-bred = int(input("Skriv inn bredde:\t"))
+høgd = input("Skriv inn høyde:\t")
+bred = input("Skriv inn bredde:\t")
+
+try:
+    int(høgd)
+    riktig=True
+except ValueError:
+    print("feil")
+    exit()
 
 def vend(høyde,bredde):
     if høyde>bredde:

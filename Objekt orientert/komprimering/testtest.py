@@ -41,24 +41,42 @@ for bokstav in tekst:
         endelig.append(komma)
         start+=lengde+1
         lengde=0
-    
+
+    elif bokstav == ":":
+        #print(tekst[start:(start+lengde)])
+        endelig.append(tekst[start:(start+lengde)])
+        endelig.append(":")
+        start+=lengde+1
+        lengde=0 
     else:
         lengde+=1
 
-for ord in endelig:
-    print(ord,end="")
+#for ord in endelig:
+#    print(ord,end="")
+
+ordliste.append(" ")
+ordliste.append(".")
+ordliste.append(",")
+ordliste.append(":")
+ordliste.append(";")
+
 
 for ord in endelig:
     if ord in ordliste:
         endelig[endelig.index(ord)]=endelig.index(ord)
 
 for ord in endelig:
-    print(ord,end="")
+    print(ord,end=",")
 
 
+
+
+'''
 endelig2 = endelig
 ordliste2 = ordliste
 ferdig=[]
+
+
 
 for indeks in endelig2:
     try:
@@ -69,3 +87,4 @@ for indeks in endelig2:
         print(indeks)
 
 print(ferdig)
+'''

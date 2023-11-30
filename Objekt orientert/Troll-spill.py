@@ -2,7 +2,7 @@
 #
 #   klasse med karakterer
 #   subclass med troll, spiller
-#   subclass med level 1, 2, 2, boss for troll
+#   subclass med level 1, 2, 3, boss for troll
 #   level 1, 2, 3 har samme angrep
 #
 #   Troll:

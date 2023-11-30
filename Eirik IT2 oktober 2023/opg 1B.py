@@ -1,4 +1,3 @@
-
 tallListe = []
 spesialnummer = 7
 listelengde = 100
