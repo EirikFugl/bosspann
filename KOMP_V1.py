@@ -4,7 +4,6 @@ import os                           # clearer terminalen
 os.system('cls')
 
 
-
 defaultTINN=r"TekstINN.txt"
 defaultTUT=r"TekstUT.txt"
 defaultINN=r"KompINN.sjef"
@@ -26,6 +25,8 @@ defaultUT=r"KompUT.sjef"
 #    Ingen "du må gjøre x før y", men at du kan ikke gjøre x før y er gjort
 
 # 5. Fikse lasting av komprimerte ting
+
+############################################## OPPDATERING
 
 # 6. Sjekk om HASH av self.string er lik dekomprimert
 
