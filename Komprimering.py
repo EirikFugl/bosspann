@@ -234,7 +234,7 @@ elif tekst=="1":
 
 # arbeidsløkke
 while True:
-    print(f"{hvit}\n\nHva vil du gjøre? Skriv inn tallet tilsvarende funksjonen du vil bruke:\n")
+    print(f"{grønn}\n\nHva vil du gjøre? Skriv inn tallet tilsvarende funksjonen du vil bruke:\n")
     print(f"{rød}1. Print teksten\n2. Endre teksten\n3. Få størrelsen til teksten\n4. Få størrelsen til en fil\n5. Laste  tekst fra fil\n6. Laste  komprimert tekst fra fil\n7. Skrive tekst til fil\n\n8. Komprimere tekst")
 
     if tekst.kompStatus() == True:
@@ -252,7 +252,7 @@ while True:
         print("Skriv et tall!")
         continue
     
-    print(f"{grønn}")
+    print(f"{hvit}")
 
     match tallin:
         case 1: 
