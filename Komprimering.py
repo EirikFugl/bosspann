@@ -94,7 +94,6 @@ class Tekst:
         self.TALLkomp = linje2
 
 
-    
     def skrivTekstTil(self,filnavn):
         """Skriver teksten til en fil"""
         
@@ -119,7 +118,7 @@ class Tekst:
         self.komprimert=True
         endelig = []
         global tidStart
-        tidStart = time.time()
+        tidStart = time.time_ns()
 
         seps = [" ",".",",",":",";"]
 
@@ -136,35 +135,55 @@ class Tekst:
             else:
                 lengde+=1
 
-            ordliste = []
-            talliste = []
+        ordliste = []
+        talliste = []
 
-            for ordEsep in endelig:
-                if ordEsep not in ordliste:
-                    ordliste.append(ordEsep)
-                    talliste.append(ordliste.index(ordEsep))
-                else:
-                    talliste.append(ordliste.index(ordEsep))
+        for ordEsep in endelig:
+            if ordEsep not in ordliste:
+                ordliste.append(ordEsep)
+                talliste.append(ordliste.index(ordEsep))
+            else:
+                talliste.append(ordliste.index(ordEsep))
             
-            tString = ""
+        
+        mellomrom=ordliste.index(" ")
+        
 
-            for tall in talliste:
-                tString+=str(tall)
-                tString+=","
-            
-            oString = ""
-            for ord in ordliste:
-                oString+=str(ord)
-                oString+=self.HEMSEP
-            
-            self.TALLkomp=tString
-            self.ORDkomp=oString
+        print(len(talliste))
+        print(talliste)
+        
+        # i=0
+        # while i < len(talliste)-1:
+        #     if talliste[i+1] == mellomrom:
+        #         talliste[i] = "m"+str(talliste[i])
+        #         talliste.pop(talliste[i+1])
+        #     i+=1
 
+        # for ting in talliste:
+        #     if ting == mellomrom:
+        #         talliste.pop(talliste.index(mellomrom))
 
-            global tidStopp
-            tidStopp = time.time()
+    
+        
+        
+        tString = ""
 
-            self.kompTid = tidStopp-tidStart
+        for tall in talliste:
+            tString+=str(tall)
+            tString+=","
+        
+        oString = ""
+        for ord in ordliste:
+            oString+=str(ord)
+            oString+=self.HEMSEP
+        
+        self.TALLkomp=tString
+        self.ORDkomp=oString
+
+        global tidStopp
+        tidStopp = time.time_ns()
+
+        self.kompTid = tidStopp-tidStart
     
     def kompStatus(self):
         """Sier om komprimering er kjørt"""
@@ -215,7 +234,7 @@ class Tekst:
         else:
             return False
 
-        
+
 
 
 
@@ -223,7 +242,7 @@ class Tekst:
 tekst=input("Skriv inn din tekst, [ENTER] for lang, 1 for kort:\t")
 if tekst=="":
     tekst=Tekst(defaultTEKST)
-    print(f"Bruker standardtekst: The European languages\nADVARSEL: LAAANG KOMPRIMERINGSTID")
+    print(f"Bruker standardtekst: The European languages\nADVARSEL: LAAANG KOMPRIMERINGSTID",end="🗿")
 elif tekst=="1":
     tekst=Tekst(defaultTEKST[0:2000])
     print(f"Bruker standardtekst: The European languages, kortversjon")
@@ -334,7 +353,7 @@ while True:
             print(f"Skrev tekst til filen {filnavn}")
         
         case 12:
-            print(f"Det tok {int(tekst.tidKomp())} sekunder å komprimere teksten")
+            print(f"Det tok {int(tekst.tidKomp())} nanosekunder å komprimere teksten\nDet vil si {int(tekst.tidKomp())/1000000} millisekunder")
         
         case 13:
 
@@ -351,9 +370,4 @@ while True:
                 print("Originalteksten og den dekomprimerte teksten er ikke like, og det har skjedd en feil")
             
             
-
-
-
-
-
     time.sleep(1)
