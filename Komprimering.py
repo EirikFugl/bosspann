@@ -30,7 +30,7 @@ class Tekst:
     def __init__(self,string):
         self.string = string
         
-        self.HEMSEP = "§¨~"
+        self.HEMSEP = "§~"
         self.komprimert = False
         self.kompTid = 0
         self.ORDkomp = ""
@@ -39,6 +39,7 @@ class Tekst:
         self.TALLukomp = ""
         self.DekomString = ""
         self.dekomprimert = False
+        self.mellomrom = ""
 
     
     def __str__(self):
@@ -146,25 +147,30 @@ class Tekst:
                 talliste.append(ordliste.index(ordEsep))
             
         
-        mellomrom=ordliste.index(" ")
+        self.mellomrom=ordliste.index(" ")
         
 
-        print(len(talliste))
-        print(talliste)
+        # print(len(talliste))
+        # print(talliste)
         
-        # i=0
-        # while i < len(talliste)-1:
-        #     if talliste[i+1] == mellomrom:
-        #         talliste[i] = "m"+str(talliste[i])
-        #         talliste.pop(talliste[i+1])
-        #     i+=1
+        i=0
+        while i < len(talliste)-1:
+            if talliste[i+1] == self.mellomrom:
+                talliste[i] = "m"+str(talliste[i])
+                talliste.pop(talliste[i+1])
+            i+=1
 
-        # for ting in talliste:
-        #     if ting == mellomrom:
-        #         talliste.pop(talliste.index(mellomrom))
+        for ting in talliste:
+            if ting == self.mellomrom:
+                talliste.pop(talliste.index(self.mellomrom))
 
-    
-        
+        i=0
+        while i < len(talliste)-1:
+            if "m" in str(talliste[i]):
+                talliste[i] = talliste[i][1:]
+            else:
+                talliste[i] = "m"+str(talliste[i])
+            i+=1
         
         tString = ""
 
@@ -205,9 +211,21 @@ class Tekst:
         fOrdliste.pop(-1)
 
         for ting in fTalliste:
-            fTalliste[fTalliste.index(ting)]=int(ting)
+            fTalliste[fTalliste.index(ting)]=ting
 
-        self.TALLukomp = fTalliste
+        print(fTalliste)
+
+        fTalliste2 = []
+
+        for ting in fTalliste:
+            if "m" in str(ting):
+                fTalliste2.append(int(ting[1:]))
+            elif "m" not in str(ting):
+                fTalliste2.append(int(ting))
+                fTalliste2.append(int(self.mellomrom))
+
+
+        self.TALLukomp = fTalliste2
         self.ORDukomp = fOrdliste
 
         for tall in self.TALLukomp:
@@ -233,6 +251,7 @@ class Tekst:
             return True
         else:
             return False
+
 
 
 
@@ -368,6 +387,8 @@ while True:
                 print("Den originale teksten er identisk til den dekomprimerte teksten, og vi kan være sikker på at ingen informasjon er tapt!")
             else:
                 print("Originalteksten og den dekomprimerte teksten er ikke like, og det har skjedd en feil")
+            
+            
             
             
     time.sleep(1)
