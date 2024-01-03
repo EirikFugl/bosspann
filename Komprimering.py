@@ -162,7 +162,8 @@ class Tekst:
 
         for ting in talliste:
             if ting == self.mellomrom:
-                talliste.pop(talliste.index(self.mellomrom))
+                pass
+                # talliste.pop(talliste.index(self.mellomrom))
 
         i=0
         while i < len(talliste)-1:
@@ -226,6 +227,9 @@ class Tekst:
 
 
         self.TALLukomp = fTalliste2
+
+
+        self.TALLukomp = fTalliste
         self.ORDukomp = fOrdliste
 
         for tall in self.TALLukomp:
@@ -251,7 +255,25 @@ class Tekst:
             return True
         else:
             return False
+    
+    def finnFeil(self):
 
+        if len(self.string)==len(self.DekomString):
+            i=0
+            while i<=len(self.string):
+                if self.string[i]!=self.DekomString[i]:
+                    print(self.string[i],"\t",self.DekomString[i])
+        else:
+            print(self.string[len(self.DekomString):len(self.string)])
+
+
+
+        print(len(self.string))
+        print(len(self.DekomString))
+        with open("TEST.sjef","w") as f:
+            f.write(self.string)
+            f.write("\n")
+            f.write(self.DekomString)
 
 
 
@@ -387,8 +409,12 @@ while True:
                 print("Den originale teksten er identisk til den dekomprimerte teksten, og vi kan være sikker på at ingen informasjon er tapt!")
             else:
                 print("Originalteksten og den dekomprimerte teksten er ikke like, og det har skjedd en feil")
+                tekst.finnFeil()
+        
+        case 16:
+            tekst.finnFeil()
             
             
             
             
-    time.sleep(1)
+    # time.sleep(1)
