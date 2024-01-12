@@ -15,7 +15,7 @@ vindu = p.display.set_mode((skjermInfo.current_w,skjermInfo.current_h))
 # p.draw.rect(vindu,farger[r.randint(0,99)],p.Rect(20,20,30,30))
 # time.sleep(3)
 # p.draw.circle(vindu,(244,255,0),p.Rect(30,30,60,60))
-while i<=20*60:
+while i<=10*60:
     vindu.fill(farger[r.randint(0,99)])
     p.draw.rect(vindu,farger[r.randint(0,99)],p.Rect(20,20,30,30))
 
