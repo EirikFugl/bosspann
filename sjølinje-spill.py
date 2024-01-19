@@ -1,13 +1,4 @@
-from os import environ
-environ['PYGAME_HIDE_SUPPORT_PROMPT'] = 'alhamdillulah fjern teksten'
-import pygame as p
-from pygame.locals import *
-from pygame.sprite import Sprite, Group
-import random as r
-import time
-
-
-p.init()
+### SJØLINJE SPILL
 
 # Du kjører på sjølinjen, fire felt, dobbel poeng for feil retning, fart øker mye, 
 # svinging minker med fart, biler kommer imot, plusspoeng for near miss, poeng for antall meter, 
@@ -31,97 +22,249 @@ p.init()
 # sprites til alt egentlig
 
 
-skjermInfo = p.display.Info()
-vinduBredde = 600#skjermInfo.current_w * 1/3
-vinduHøyde = skjermInfo.current_h -80
+ # Fjerner "Hello from pygame" teksten
+from os import environ
+environ['PYGAME_HIDE_SUPPORT_PROMPT'] = 'alhamdillulah fjern teksten'
 
-vindu = p.display.set_mode(((vinduBredde,vinduHøyde)))
+ # importerer ting
+import pygame as p
+from pygame.locals import *
+import random as r
+import math as m
+
+ # importerer bildefiler
+bilBilde = r"C:\Users\eirik\Downloads\KxSI1Mx.png"
+bakgrunnBilde = r"C:\Users\eirik\Downloads\360_F_271939209_fjpuoikPWbsvipp0R6XNzzlFohw76Mwb.jpg"
+treBilde = r"C:\Users\eirik\Downloads\tumblr_df214276172b6f4c6eac99ebec69c734_e0846910_500.png"
+
+ # farger
+farge = {"Rød":(255,0,0),"Grønn":(0,255,0),"Blå":(0,0,255),"Svart":(0,0,0),"Grå":(50,50,50)}
+
+
+ # skjerm setup
+p.init()
+
+vindubredde = 600
+vinduhøyde = 800
+vindu = p.display.set_mode((vindubredde,vinduhøyde))
+
+
+# bakgrunn setup
+bakgrunn = p.image.load(bakgrunnBilde).convert_alpha()
+bakgrunn = p.transform.rotozoom(bakgrunn,90,2)
+
+vindubredde = bakgrunn.get_rect().width-52
+vindu = p.display.set_mode((vindubredde,vinduhøyde))
 p.display.set_caption("Sjølinje-spill")
 
-fargeListe = {"Rød":(255,0,0),"Grønn":(0,255,0),"Blå":(0,0,255)}
+scroll = 0
+tiles = m.ceil(vinduhøyde / bakgrunn.get_height()) + 1
+
+
+klokke = p.time.Clock()
+
+font = p.freetype.SysFont("Arial Black", 30)
+stor_font = p.freetype.SysFont("Arial Black", 60)
+
+ # Konstanter
+
+størrelse = 0.4
+maksVinkel = 15
+ryggeFart = 20
+maksFart = 600
+fps = 100
+fartsKorrigering = 0.02
+spawnsjanse = 4
+svingt = False
+krasjet = False
+
+globalFart = 0
+
+
+# Klasser
 
 class Bil(p.sprite.Sprite):
-    def __init__(self,image,x,y,bilde=r"C:\Users\eirik\Downloads\KxSI1Mx.png"):
+    def __init__(self,x,y,fart,bilde=bilBilde,aksel=0.5,brems=0.5,sving=1,spiller=False):
         p.sprite.Sprite.__init__(self)
-        self.image = image
-        self.image = p.image.load(r"C:\Users\eirik\Downloads\KxSI1Mx.png")
         self.x = x
         self.y = y
         self.bilde = bilde
+        self.fart = fart
+        self.aksel = aksel
+        self.brems = brems
+        self.sving = sving
+        self.spiller = spiller
 
-        self.image = p.transform.scale(self.image, (self.image.get_rect().width*0.05,self.image.get_rect().height*0.05)).convert_alpha()
+        self.vinkel = 0
 
+        self.image = p.image.load(self.bilde).convert_alpha()
+        if spiller == False:
+            self.image = p.transform.rotate(self.image,180)
+        self.image = p.transform.smoothscale(self.image,(self.image.get_rect().width*størrelse*0.1,self.image.get_rect().height*størrelse*0.1))
+        self.orig_image = self.image.copy()
         self.rect = self.image.get_rect()
-        self.rect.center = [x, y]
+        self.rect.center = (self.x,self.y)
+
+    def akselerer(self):
+        global globalFart
+        global maksFart
+        if  globalFart < maksFart: globalFart+=self.aksel
     
-    def roter(self,vinkel):
-        print(self.image.get_rect().center)
-        midt = self.image.get_rect().center
-        self.image = p.transform.rotate(vindu,vinkel)
-        print(self.image.get_rect().center)
-        self.rect = self.image.get_rect(center=midt)
+    def bremse(self):
+        global globalFart
+        global ryggeFart
+        if globalFart > -ryggeFart: globalFart -=self.brems
+    
+    def svinge(self,retning):
+        global maksVinkel
+        global svingt
 
-vinkling = 20
-bilGruppe = p.sprite.Group()
+        if retning == "venstre":
+            svingt = True
+            if self.vinkel < maksVinkel:
+                self.vinkel += self.sving
+            self.x -= abs(self.vinkel)*globalFart/maksFart/2
 
-bil1 = Bil(0,300,300)
-bilGruppe.add(bil1)
+        if retning == "høyre":
+            svingt = True
+            if self.vinkel > -maksVinkel:
+                self.vinkel -= self.sving
+            self.x += abs(self.vinkel)*globalFart/maksFart/2
+        
 
-farger=[]
-for i in range(100):
-    farger.append(p.Color(r.randint(0,255),r.randint(0,255),r.randint(0,255)))
+
+    def update(self):
+
+        ## ROTASJON ##
+        self.image = p.transform.rotozoom(self.orig_image,self.vinkel,1)
+        self.rect = self.image.get_rect(center=self.rect.center)
+        self.rect.center = (self.x,self.y)
+
+        if self.spiller == False:
+            self.y += globalFart * fartsKorrigering
+            self.y += self.fart
 
 
+class Krasj(p.sprite.Sprite):
+    def __init__(self,x,y,bilde=treBilde):
+        p.sprite.Sprite.__init__(self)
+        self.x = x
+        self.y = y
+
+        self.image = p.image.load(bilde).convert_alpha()
+        self.image = p.transform.smoothscale(self.image,(self.image.get_rect().width*størrelse*0.4,self.image.get_rect().height*størrelse*0.4))
+        self.rect = self.image.get_rect()
+        self.rect.center = (self.x,self.y)
+    
+    def update(self):
+        self.y += globalFart * fartsKorrigering
+        self.rect.center = (self.x,self.y)
+
+
+# sprite setup
+
+spillerBil = Bil(vindubredde/2+20,vinduhøyde-100,0,spiller=True,brems=2,aksel=2)
+
+bilgruppe = p.sprite.Group()
+kollisjonsgruppe = p.sprite.Group()
+
+bilgruppe.add(spillerBil)
+
+
+# vanlige funksjoner
+def oppdaterAlt():
+    kollisjonsgruppe.update()    
+    bilgruppe.update()
+
+def tegnAlt():
+    kollisjonsgruppe.draw(vindu)  
+    bilgruppe.draw(vindu)  
+
+def spawnTrær(spawnSjanse):
+    a = r.randint(0,100)
+    if a >= 0 and a<= spawnSjanse/10:
+        kollisjonsgruppe.add(Krasj(r.randint(0,vindubredde),0))
+        kollisjonsgruppe.add(Bil(200,20,5))
+    
+
+def sjekKollisjon(gruppe):
+    global globalFart
+    kolliderer=p.sprite.spritecollide(spillerBil,gruppe,False)
+    if str(kolliderer) != "[]":
+        globalFart = 0
+        spillerBil.aksel=0
+        stor_font.render_to(vindu,(vindubredde/2-100,vinduhøyde/2),f"GAME OVER",(0, 0, 0))
+
+# Main Loop
 kjører = True
-clock = p.time.Clock()
 
 while kjører:
+    klokke.tick(fps)
 
-    clock.tick(10)
+    svingt = False
+
     for event in p.event.get():
-
-
         if event.type == QUIT:
             kjører = False
-        
-        # if event.type == KEYDOWN:
-        #     if event.key == p.K_5:
-        #         vindu.fill(farger[r.randint(0,99)])
-        #     if event.key == p.K_ESCAPE:
-        #         kjører == False
-        #     if event.key == p.K_h:
-        #         p.draw.rect(vindu, farger[r.randint(0,99)],(xPos,yPos,50,50))
-        #     if event.key==p.K_g:
-        #         ball.endreFart(1.1)
-        #         ball2.endreFart(1.1)
-    
+            p.quit()
+            exit()
 
+    rettelse = 1
+    retning = ""
+
+    vindu.fill(farge["Svart"])
+
+    ## Scrolle bakgrunnsbilde ##
+
+    tall1 = 0
+    while tall1 < tiles:
+        vindu.blit(bakgrunn,(-50,(bakgrunn.get_height()*tall1+scroll)*-1))
+        tall1 +=1
+    
+    scroll -= globalFart*fartsKorrigering
+
+    if abs(scroll) > bakgrunn.get_height():
+        scroll = 0
+
+    
+    ## INPUTS
+    
     trykkedeTaster = p.key.get_pressed()
+
+    if trykkedeTaster[K_ESCAPE]:
+        kjører = False
+    
     if trykkedeTaster[K_UP]:
-        pass
+        spillerBil.akselerer()
+    
     if trykkedeTaster[K_DOWN]:
-        pass
+        spillerBil.bremse()
+    
+    pre_sving = spillerBil.vinkel
+    pre_sving_kord = spillerBil.x, spillerBil.y
+
     if trykkedeTaster[K_LEFT]:
-        bil1.roter(vinkling)
+        spillerBil.svinge("venstre")
+    
     if trykkedeTaster[K_RIGHT]:
-        # vindu.fill(farger[r.randint(0,99)])
-        bil1.roter(-vinkling)
-    vindu.fill(fargeListe["Rød"])
+        spillerBil.svinge("høyre")
 
-
-    bilGruppe.draw(vindu)
-
-
-
+    # if trykkedeTaster[K_LEFT] and trykkedeTaster[K_RIGHT]:
+    #     spillerBil.vinkel = pre_sving
+    #     spillerBil.x, spillerBil.y = pre_sving_kord
 
     
 
-    
-
-    p.display.update()
-
-
+    if svingt == False:
+        if spillerBil.vinkel <0: spillerBil.vinkel += 0.6
+        if spillerBil.vinkel >0: spillerBil.vinkel -= 0.6
 
 
-p.quit()
-exit()
+    if krasjet: sjekKollisjon(kollisjonsgruppe), spawnTrær(spawnsjanse)
+
+
+    oppdaterAlt()
+    tegnAlt()
+
+    font.render_to(vindu,(30,30),f"Fart: {str(int(round(globalFart/6,0)))} km/t",(0, 0, 0))
+    p.display.flip()
