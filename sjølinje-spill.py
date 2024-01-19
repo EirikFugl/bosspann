@@ -72,6 +72,7 @@ størrelse = 0.4
 maksVinkel = 15
 ryggeFart = 20
 maksFart = 600
+
 fps = 100
 fartsKorrigering = 0.02
 spawnsjanse = 4
@@ -79,6 +80,7 @@ svingt = False
 krasjet = False
 
 globalFart = 0
+rette_opp_fart = globalFart
 
 
 # Klasser
@@ -178,22 +180,37 @@ def oppdaterAlt():
 
 def tegnAlt():
     kollisjonsgruppe.draw(vindu)  
-    bilgruppe.draw(vindu)  
+    bilgruppe.draw(vindu) 
+
+def velg_felt():
+    a = r.randint(1,2)
+    if a == 1:
+        x = 155
+    if a == 2:
+        x = 255
+    return x 
 
 def spawnTrær(spawnSjanse):
     a = r.randint(0,100)
     if a >= 0 and a<= spawnSjanse/10:
         kollisjonsgruppe.add(Krasj(r.randint(0,vindubredde),0))
-        kollisjonsgruppe.add(Bil(200,20,5))
+        kollisjonsgruppe.add(Bil(velg_felt(),0,5))
     
+totale_krasj = 0
+krasjet = False
 
 def sjekKollisjon(gruppe):
     global globalFart
-    kolliderer=p.sprite.spritecollide(spillerBil,gruppe,False)
+    global totale_krasj
+    global krasjet
+
+    kolliderer=p.sprite.spritecollide(spillerBil,gruppe,True)
     if str(kolliderer) != "[]":
         globalFart = 0
         spillerBil.aksel=0
-        stor_font.render_to(vindu,(vindubredde/2-100,vinduhøyde/2),f"GAME OVER",(0, 0, 0))
+        totale_krasj+=1
+        
+        krasjet = True
 
 # Main Loop
 kjører = True
@@ -211,6 +228,7 @@ while kjører:
 
     rettelse = 1
     retning = ""
+    rette_opp_fart = globalFart/100
 
     vindu.fill(farge["Svart"])
 
@@ -249,22 +267,27 @@ while kjører:
     if trykkedeTaster[K_RIGHT]:
         spillerBil.svinge("høyre")
 
-    # if trykkedeTaster[K_LEFT] and trykkedeTaster[K_RIGHT]:
-    #     spillerBil.vinkel = pre_sving
-    #     spillerBil.x, spillerBil.y = pre_sving_kord
+    if trykkedeTaster[K_LEFT] and trykkedeTaster[K_RIGHT]:
+        spillerBil.vinkel = pre_sving
+        spillerBil.x, spillerBil.y = pre_sving_kord
 
     
 
     if svingt == False:
-        if spillerBil.vinkel <0: spillerBil.vinkel += 0.6
-        if spillerBil.vinkel >0: spillerBil.vinkel -= 0.6
+        if spillerBil.vinkel <0: spillerBil.vinkel += 2
+        if spillerBil.vinkel >0: spillerBil.vinkel -= 2
 
 
-    if krasjet: sjekKollisjon(kollisjonsgruppe), spawnTrær(spawnsjanse)
+    spawnTrær(5)
 
+    sjekKollisjon(kollisjonsgruppe)
+
+    if krasjet: font.render_to(vindu,(200,400),f"SUPER GAME OVER BIG L",(0, 0, 0))
 
     oppdaterAlt()
     tegnAlt()
 
     font.render_to(vindu,(30,30),f"Fart: {str(int(round(globalFart/6,0)))} km/t",(0, 0, 0))
+    font.render_to(vindu,(30,60),f"Mus: {str(p.mouse.get_pos())}",(0, 0, 0))
+    font.render_to(vindu,(30,90),f"Krasj: {str(totale_krasj)}",(0, 0, 0))
     p.display.flip()
