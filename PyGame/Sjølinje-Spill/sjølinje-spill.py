@@ -31,14 +31,24 @@ import pygame as p
 from pygame.locals import *
 import random as r
 import math as m
+import os
+\
 
- # importerer bildefiler
-bilBilde = r"C:\Users\eirik\Downloads\KxSI1Mx.png"
-bakgrunnBilde = r"C:\Users\eirik\Downloads\360_F_271939209_fjpuoikPWbsvipp0R6XNzzlFohw76Mwb.jpg"
-treBilde = r"C:\Users\eirik\Downloads\tumblr_df214276172b6f4c6eac99ebec69c734_e0846910_500.png"
+# importerer bildefiler
+# bilBilde = r"C:\Users\eirik\Downloads\KxSI1Mx.png"
+# bakgrunnBilde = r"C:\Users\eirik\Downloads\360_F_271939209_fjpuoikPWbsvipp0R6XNzzlFohw76Mwb.jpg"
+# treBilde = r"C:\Users\eirik\Downloads\tumblr_df214276172b6f4c6eac99ebec69c734_e0846910_500.png"
+
+
+def absRef(relRef): # funksjon for å finne absolutt referanse til en fil fra relativ referanse # fra linus
+    return os.path.join(os.path.dirname(__file__), relRef)
+
+bilBilde = absRef("Sjølinje-bilder/bilBilde.png")
+bakgrunnBilde = absRef("Sjølinje-bilder/bakgrunnBilde.jpg")
+treBilde = absRef("Sjølinje-bilder/treBilde.png")
 
  # farger
-farge = {"Rød":(255,0,0),"Grønn":(0,255,0),"Blå":(0,0,255),"Svart":(0,0,0),"Grå":(50,50,50)}
+farge = {"Rød":(255,0,0),"Grønn":(0,255,0),"Blå":(0,0,255),"Svart":(0,0,0),"Grå":(50,50,50),"Gul":(255,255,0)}
 
 
  # skjerm setup
@@ -64,14 +74,15 @@ tiles = m.ceil(vinduhøyde / bakgrunn.get_height()) + 1
 klokke = p.time.Clock()
 
 font = p.freetype.SysFont("Arial Black", 30)
-stor_font = p.freetype.SysFont("Arial Black", 60)
+stor_font = p.freetype.SysFont("Arial Black", 42)
+fontGul = p.freetype.SysFont("Arial Black", 35)
 
  # Konstanter
 
 størrelse = 0.4
 maksVinkel = 15
 ryggeFart = 20
-maksFart = 600
+maksFart = 1000
 
 fps = 100
 fartsKorrigering = 0.02
@@ -86,7 +97,7 @@ rette_opp_fart = globalFart
 # Klasser
 
 class Bil(p.sprite.Sprite):
-    def __init__(self,x,y,fart,bilde=bilBilde,aksel=0.5,brems=0.5,sving=1,spiller=False):
+    def __init__(self,x,y,fart,bilde=bilBilde,aksel=0.5,brems=0.5,sving=1,spiller=False,retning=0):
         p.sprite.Sprite.__init__(self)
         self.x = x
         self.y = y
@@ -100,7 +111,7 @@ class Bil(p.sprite.Sprite):
         self.vinkel = 0
 
         self.image = p.image.load(self.bilde).convert_alpha()
-        if spiller == False:
+        if retning=="Mot":
             self.image = p.transform.rotate(self.image,180)
         self.image = p.transform.smoothscale(self.image,(self.image.get_rect().width*størrelse*0.1,self.image.get_rect().height*størrelse*0.1))
         self.orig_image = self.image.copy()
@@ -165,7 +176,7 @@ class Krasj(p.sprite.Sprite):
 
 # sprite setup
 
-spillerBil = Bil(vindubredde/2+20,vinduhøyde-100,0,spiller=True,brems=2,aksel=2)
+spillerBil = Bil(vindubredde/2+20,vinduhøyde-100,0,spiller=True,brems=5,aksel=5,retning="Med")
 
 bilgruppe = p.sprite.Group()
 kollisjonsgruppe = p.sprite.Group()
@@ -187,15 +198,52 @@ def velg_felt():
     if a == 1:
         x = 155
     if a == 2:
-        x = 255
+        x = 270
     return x 
 
 def spawnTrær(spawnSjanse):
     a = r.randint(0,100)
     if a >= 0 and a<= spawnSjanse/10:
-        kollisjonsgruppe.add(Krasj(r.randint(0,vindubredde),0))
-        kollisjonsgruppe.add(Bil(velg_felt(),0,5))
-    
+        kollisjonsgruppe.add(Krasj(r.randint(0,80),0))
+        kollisjonsgruppe.add(Krasj(r.randint(vindubredde-60,vindubredde),0))
+        # kollisjonsgruppe.add(Bil(velg_felt(),0,5))
+
+feltvalg = {
+    "MotVen": {"X-Verdi": 157,
+               "Y-Verdi": 0,
+               "Fart": 4
+               },
+    "MotHøy": {"X-Verdi": 267,
+               "Y-Verdi": 0,
+               "Fart": 3
+               },
+    "MedVen": {"X-Verdi": 375,
+               "Y-Verdi": 0,
+               "Fart": -5
+               },
+    "MedHøy": {"X-Verdi": 485,
+               "Y-Verdi": 0,
+               "Fart": -4
+               },
+    }
+
+def spawnBiler(spawnSjanse):
+    a= r.randint(0,1000)
+    if a >=0 and a<= spawnSjanse/50:
+        kollisjonsgruppe.add(Bil(feltvalg["MotVen"]["X-Verdi"],feltvalg["MotVen"]["Y-Verdi"],feltvalg["MotVen"]["Fart"],retning="Mot"))
+    a= r.randint(0,1000)
+    if a >=0 and a<= spawnSjanse/50:
+        kollisjonsgruppe.add(Bil(feltvalg["MotHøy"]["X-Verdi"],feltvalg["MotHøy"]["Y-Verdi"],feltvalg["MotHøy"]["Fart"],retning="Mot"))
+    a= r.randint(0,1000)
+    if a >=0 and a<= spawnSjanse/50:
+        kollisjonsgruppe.add(Bil(feltvalg["MedVen"]["X-Verdi"],feltvalg["MedVen"]["Y-Verdi"],feltvalg["MedVen"]["Fart"],retning="Med"))
+    a= r.randint(0,1000)
+    if a >=0 and a<= spawnSjanse/50:
+        kollisjonsgruppe.add(Bil(feltvalg["MedHøy"]["X-Verdi"],feltvalg["MedHøy"]["Y-Verdi"],feltvalg["MedHøy"]["Fart"],retning="Med"))
+
+
+
+
 totale_krasj = 0
 krasjet = False
 
@@ -208,15 +256,37 @@ def sjekKollisjon(gruppe):
     if str(kolliderer) != "[]":
         globalFart = 0
         spillerBil.aksel=0
+        spillerBil.brems=0
         totale_krasj+=1
         
         krasjet = True
 
+def tegnUI():
+    if krasjet: stor_font.render_to(vindu,(0,400),f"SUPER GAME OVER BIG L",(0, 0, 0))
+    font.render_to(vindu,(30,30),f"{str(int(round(globalFart/6,0)))} km/t",(0, 0, 0))
+    # font.render_to(vindu,(30,60),f"Mus: {str(p.mouse.get_pos())}",(0, 0, 0))
+    # font.render_to(vindu,(30,90),f"Krasj: {str(totale_krasj)}",(0, 0, 0))
+
+    if dobbel == True: fontGul.render_to(vindu,(30,60),f"{str(int(round(total_lengde,0)))} m",farge["Gul"])
+    else:              font.render_to(vindu,(30,60),f"{str(int(round(total_lengde,0)))} m")
+
 # Main Loop
 kjører = True
+total_lengde = 0
+
 
 while kjører:
     klokke.tick(fps)
+
+
+    abab,baba = spillerBil.rect.center
+    if abab<= vindubredde/2: 
+        total_lengde+=globalFart/12/fps*2
+        dobbel = True
+    else: 
+        total_lengde+=globalFart/12/fps
+        dobbel = False
+
 
     svingt = False
 
@@ -271,23 +341,22 @@ while kjører:
         spillerBil.vinkel = pre_sving
         spillerBil.x, spillerBil.y = pre_sving_kord
 
-    
 
     if svingt == False:
         if spillerBil.vinkel <0: spillerBil.vinkel += 2
         if spillerBil.vinkel >0: spillerBil.vinkel -= 2
 
 
-    spawnTrær(5)
+    spawnTrær(3*globalFart/maksFart*1.1)
+    spawnBiler(3*globalFart/maksFart*1.1)
 
     sjekKollisjon(kollisjonsgruppe)
 
-    if krasjet: font.render_to(vindu,(200,400),f"SUPER GAME OVER BIG L",(0, 0, 0))
+    
 
     oppdaterAlt()
     tegnAlt()
 
-    font.render_to(vindu,(30,30),f"Fart: {str(int(round(globalFart/6,0)))} km/t",(0, 0, 0))
-    font.render_to(vindu,(30,60),f"Mus: {str(p.mouse.get_pos())}",(0, 0, 0))
-    font.render_to(vindu,(30,90),f"Krasj: {str(totale_krasj)}",(0, 0, 0))
+    tegnUI()
+
     p.display.flip()
