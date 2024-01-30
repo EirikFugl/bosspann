@@ -22,7 +22,30 @@
 # sprites til alt egentlig
 
 
- # Fjerner "Hello from pygame" teksten
+
+
+
+
+###   KONTROLLER   ###
+# Pil venstre/høyre for svinge venstre/høyre
+# Pil opp/ned for akselere/bremse/rygge
+# LShift + 1,2,3,4,5,R for å skifte gir
+# Girene må opp cirka hver 40. km/h
+# Altså 1. gir opp til 40 km/h, 3. gir mellom 80 og 120 km/h
+# Esc for å avslutte
+#
+#
+# I tillegg får du opp framepacing og litt sånn
+# Det er mest for å se om spillet hakker, eller om noe er uoptimalisert
+# Lager en graf etter avsluttet spill som viser tid brukt på hver frame
+# Lykke til!
+
+
+
+
+
+
+# Fjerner "Hello from pygame" teksten
 from os import environ
 environ['PYGAME_HIDE_SUPPORT_PROMPT'] = 'alhamdillulah fjern teksten'
 
