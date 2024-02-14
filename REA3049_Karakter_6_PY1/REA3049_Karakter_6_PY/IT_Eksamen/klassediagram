@@ -1,0 +1,23 @@
+Square:
+Inherits pygame sprite
+properties:
+position
+color
+
+Player:
+Inherits Square
+properties:
+speed
+score
+direction
+methods:
+update stuff (checking collisions moving, etc)
+change directions
+
+Food:
+inherits Square
+methods:
+turn into obstacle
+
+Obstacle:
+inherits square
