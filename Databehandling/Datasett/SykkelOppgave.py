@@ -33,15 +33,33 @@ with open(filnavn, encoding = "utf-8-sig") as fil:
         slutt.append((rad[9]))
 
 
+
+midRader = []
+rader = []
+for i in range(len(startTid)):
+    midRader = [startTid[(i-1)],slutTid[(i-1)],tid[(i-1)],start[(i-1)],slutt[(i-1)]]
+    rader.append(midRader)
+
+
+
+with open(nyfil,"w", encoding="utf-8-sig",newline="") as fil:
+    writer = csv.writer(fil)
+
+    writer.writerow(kolonner)
+
+    writer.writerows(rader)
+
 print(f"\n\n\n{kolonner[0]}\t\t{kolonner[1]}\t\t{kolonner[2]}  {kolonner[3]}\t\t\t{kolonner[4]}")
 
+
+antall_bits = 3
 def normaliserTekst(tekst):
-    if len(str(tekst)) > 24:
-        while len(str(tekst)) > 24:
+    if len(str(tekst)) > antall_bits*8:
+        while len(str(tekst)) > antall_bits*8:
             tekst = tekst[:-1]
     
     if len(str(tekst))< 24:
-        while len(str((tekst))) < 24:
+        while len(str((tekst))) < antall_bits*8:
             tekst = str(tekst) + " "
 
     return tekst
@@ -53,6 +71,11 @@ def normaliserTekst(tekst):
 
 
 
-for i in range(len(startTid)):
-    a=input()
-    print(f"{normaliserTekst(startTid[i-1])}\t{normaliserTekst(slutTid[i-1])}\t{normaliserTekst(tid[i-1])}\t{normaliserTekst(start[i-1])}\t\t\t{normaliserTekst(slutt[i-1])}")
+
+
+
+# plt.hist(tid,range=(0,3600),bins=101)
+plt.show()
+
+# for i in range(len(startTid)):
+#     print(f"{normaliserTekst(startTid[i-1])}\t{normaliserTekst(slutTid[i-1])}\t{normaliserTekst(tid[i-1])}\t{normaliserTekst(start[i-1])}\t\t\t{normaliserTekst(slutt[i-1])}")
