@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-
-
 yverd = [1,2,3,4,5,6]
 y2verd = [1,4,6,3,5,0]
 y3verd = [4,7,2,3,8,10]

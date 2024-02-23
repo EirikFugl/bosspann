@@ -26,7 +26,7 @@ with open(filnavn, encoding = "utf-8-sig") as fil:
         start.append((rad[3]))
         slutt.append((rad[4]))
 
-
+# start
 
 stasjoner = {}
 for stasjon in start:
@@ -35,8 +35,50 @@ for stasjon in start:
     else:
         stasjoner[stasjon]+=1
 
-stasjonerKopi = stasjoner
-sortert = {}
-usortert = True
-while usortert:
-    
+
+stasjoner_sortert = {}
+
+
+for i in range(len(stasjoner.keys())):
+    lavest = stasjoner[list(stasjoner.keys())[0]]
+    lavest_stasjonsnavn = list(stasjoner.keys())[0]
+    for ting in stasjoner.keys():
+        if stasjoner[ting] < lavest:
+            lavest = stasjoner[ting]
+            lavest_stasjonsnavn = ting
+    stasjoner_sortert[lavest_stasjonsnavn] = lavest
+    stasjoner.pop(lavest_stasjonsnavn)
+
+
+print("\n\n")
+print(stasjoner_sortert)
+
+# stasjoner_slutt = {}
+# for stasjon in slutt:
+#     if stasjon not in stasjoner_slutt.keys():
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+stasjonsliste = list(stasjoner_sortert.keys())
+verdiliste = list(stasjoner_sortert.values())
+
+
+fig = plt.figure(figsize = (15,50))
+
+plt.barh(stasjonsliste,verdiliste,color = "blue")
+
+plt.savefig('sykkelSortert.png', bbox_inches='tight')
+
+plt.close(fig)
+# plt.show()

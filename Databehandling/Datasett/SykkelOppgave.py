@@ -2,11 +2,8 @@ import csv
 import matplotlib.pyplot as plt
 import os
 
-
-
 filnavn = r"Databehandling\Datasett\sykkel.csv"
 nyfil = r"Databehandling\Datasett\sykkelV2.csv"
-
 
                 # Kolonne nr.
 startTid = []   # 0
@@ -14,7 +11,6 @@ slutTid = []    # 1
 tid = []        # 2
 start = []      # 4
 slutt = []      # 9
-
 
 with open(filnavn, encoding = "utf-8-sig") as fil:
     filinnhold = csv.reader(fil,delimiter=",")
@@ -33,13 +29,11 @@ with open(filnavn, encoding = "utf-8-sig") as fil:
         slutt.append((rad[9]))
 
 
-
 midRader = []
 rader = []
 for i in range(len(startTid)):
     midRader = [startTid[(i-1)],slutTid[(i-1)],tid[(i-1)],start[(i-1)],slutt[(i-1)]]
     rader.append(midRader)
-
 
 
 with open(nyfil,"w", encoding="utf-8-sig",newline="") as fil:
@@ -63,13 +57,6 @@ def normaliserTekst(tekst):
             tekst = str(tekst) + " "
 
     return tekst
-
-
-
-
-
-
-
 
 
 
